@@ -60,7 +60,7 @@ class HttpFilterTest {
     void writableContext() {
         String url = "http://localhost:" + port + "/ok";
 
-        String response = this.restTemplate.getForObject(url, String.class);
+        String response = restTemplate.getForObject(url, String.class);
 
         assertThat(response).isEqualTo("ok");
         verify(requestContext).set(any(HttpServletRequest.class));
@@ -74,7 +74,7 @@ class HttpFilterTest {
         InOrder inOrder = inOrder(firstFilterAspect, secondFilterAspect,
                 firstInterceptorAspect, secondInterceptorAspect);
 
-        String response = this.restTemplate.getForObject(url, String.class);
+        String response = restTemplate.getForObject(url, String.class);
 
         assertThat(response).isEqualTo("ok");
         inOrder.verify(firstFilterAspect).before();
@@ -111,7 +111,7 @@ class HttpFilterTest {
         InOrder inOrder = inOrder(firstFilterAspect, secondFilterAspect,
                 firstInterceptorAspect, secondInterceptorAspect);
 
-        ResponseEntity<?> response = this.restTemplate.getForEntity(url, Object.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, Object.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
         inOrder.verify(firstFilterAspect).before();
