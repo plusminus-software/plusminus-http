@@ -1,6 +1,7 @@
 package software.plusminus.http;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @AllArgsConstructor
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@ConditionalOnBean(AspectContext.class)
 public class HttpInterceptor implements HandlerInterceptor, WebMvcConfigurer {
 
     private AspectContext aspectContext;
