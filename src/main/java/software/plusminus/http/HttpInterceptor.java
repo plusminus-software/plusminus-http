@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import software.plusminus.aspect.AspectContext;
 import software.plusminus.context.WritableContext;
+import software.plusminus.listener.Stop;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HttpInterceptor implements HandlerInterceptor, WebMvcConfigurer {
 
     private AspectContext aspectContext;
+    private WritableContext<Object> handlerContext;
     private WritableContext<HandlerMethod> handlerMethodContext;
 
     @Override
@@ -37,6 +39,7 @@ public class HttpInterceptor implements HandlerInterceptor, WebMvcConfigurer {
         if (request.getDispatcherType() == DispatcherType.REQUEST) {
             populateHandlerContext(handler);
             aspectContext.before();
+            return !Stop.stopping();
         }
         return true;
     }
@@ -63,6 +66,7 @@ public class HttpInterceptor implements HandlerInterceptor, WebMvcConfigurer {
     }
 
     private void populateHandlerContext(Object handler) {
+        handlerContext.set(handler);
         if (handler instanceof HandlerMethod) {
             handlerMethodContext.set((HandlerMethod) handler);
         }

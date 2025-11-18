@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import software.plusminus.context.WritableContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +29,7 @@ public class HttpAutoconfig {
     }
 
     @Bean
-    WritableContext<ResourceHttpRequestHandler> resourceHttpRequestHandlerContext() {
+    WritableContext<Object> handlerContext() {
         return WritableContext.of();
     }
 }
