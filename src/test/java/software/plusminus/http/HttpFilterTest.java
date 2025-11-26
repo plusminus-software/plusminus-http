@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -17,6 +16,7 @@ import software.plusminus.http.fixtures.FirstFilterAspect;
 import software.plusminus.http.fixtures.FirstInterceptorAspect;
 import software.plusminus.http.fixtures.SecondFilterAspect;
 import software.plusminus.http.fixtures.SecondInterceptorAspect;
+import software.plusminus.test.IntegrationTest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +27,7 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class HttpFilterTest {
+class HttpFilterTest extends IntegrationTest {
 
     @LocalServerPort
     private int port;
@@ -51,8 +50,10 @@ class HttpFilterTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Override
     @AfterEach
-    void afterEach() {
+    public void afterEach() {
+        super.afterEach();
         CallsContext.clear();
     }
 
